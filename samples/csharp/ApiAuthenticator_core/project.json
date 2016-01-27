@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "newtonsoft.json": "8.0.1"
+  },
+  "commands": {
+    "run": "run"
+  },
+  "frameworks": {
+    "dnx451": {}
+  }
+}

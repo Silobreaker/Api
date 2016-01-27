@@ -1,0 +1,13 @@
+{
+    "name": "silobreaker-api-demo",
+    "version": "1.0.0",
+    "description": "A node example demonstrating authenticating with Silobreaker.",
+    "private": true,
+    "dependencies": {
+        "request": "^2.67.0",
+        "tough-cookie-filestore": "^0.0.1"
+    },
+    "scripts": {
+        "start": "node makeDigest.js"
+    }
+}
