@@ -40,13 +40,13 @@ function signIn(continuation, continuationparam)
    var contp = continuationparam;
    
    request(
-      { method: "POST"
-      , jar: j
-      , uri: loginUri
-      , headers: {
-         "Content-Type": "application/json",
-      } 
-      , body: contents
+      { method: "POST", 
+      jar: j, 
+      uri: loginUri,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: contents
       }
     , function (error, response, body) {
          if(response.statusCode == 200){
@@ -75,25 +75,26 @@ function formsCall(call)
    });   
 }
 
-function getCredentials()
-{
+function getCredentials() {
+   const path = require("path");
+    
    // Get credentials from command line
-   var credentialsFileName = process.argv[2];
+   var credentialsFileName = process.argv[3];
    if(typeof credentialsFileName === "undefined" )
    {
-      console.error("Please supply full file name for Silobreaker credentials file in JSON format.");
+      console.error("Please supply path for Silobreaker credentials file in JSON format.");
       help();
       process.exit(0);
    }
    
+   credentialsFileName = path.resolve(credentialsFileName);
+   
    return fs.readFileSync(credentialsFileName, "utf8");
 }
 
-
-function getCall()
-{
-   // Get API call command line
-   var call = process.argv[3];
+/** Gets the call from the commandline */
+function getCall() {
+   var call = process.argv[2];
    if(typeof call === "undefined" ) {
       console.error("Please supply your API call as a parameter.");
       help();
@@ -107,8 +108,7 @@ function getCall()
    return call;   
 }
 
-function help()
-{
+function help(){
    var help = `
 USAGE: node formsauth CREDENTIALSFILE "APICALL"
 

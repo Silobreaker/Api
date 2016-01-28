@@ -8,8 +8,41 @@
 const DEFAULT_BASE_URL = "api.silobreaker.com";
 const DEFAULT_CREDENTIALS_FILENAME = "api.keys.json";
 
-var digestedUrl = generateDigestedUrl(getBaseUrl(), getCall(), getKeys());
-console.info(digestedUrl);
+var command = getCommand();
+var baseUrl = getBaseUrl();
+var call = getCall();
+var keys = getKeys();
+
+var digestedUrl = generateDigestedUrl(baseUrl, call, keys);
+
+switch (getCommand().toLowerCase()) {
+    case "make":
+        console.info(digestedUrl);
+        break;
+    case "call":
+        makeCall(digestedUrl);
+        break;
+    default:
+        console.error("Please enter a valid command");
+        help();
+        process.exit;
+}
+
+/** Performs the call to the api and prints the result
+ * @param {string} digestUri
+ */
+function makeCall(digestUri) {
+    var request = require("request");
+
+    console.info("Making call...");
+    request.get(
+        {
+            uri: digestUri,
+            json: true
+        }, function (error, response, body) {
+            console.log(body);
+        });
+}
 
 /** Generates a digested URL with the provided information
  * @param {String} baseUrl A base url for example `api.silobreaker.com`
@@ -41,9 +74,20 @@ function generateHash(data, key) {
     return hash;
 }
 
+/** Gets the command from the commandline */
+function getCommand() {
+    let command = process.argv[2];
+    if (typeof command === "undefined") {
+        console.error("Please enter a command");
+        help();
+        process.exit(0);
+    }
+    return command;
+}
+
 /** Gets the call from the commandline */
 function getCall() {
-    let call = process.argv[2];
+    let call = process.argv[3];
     console.log(call);
     if (typeof call === "undefined") {
         console.error("Please supply your API call as a parameter.");
@@ -56,7 +100,7 @@ function getCall() {
         process.exit(0);
     }
     /* leading slash is optional */
-    if(call.charAt(0) != "/"){
+    if (call.charAt(0) != "/") {
         call = "/" + call;
     }
     return call;
@@ -64,12 +108,16 @@ function getCall() {
 
 /** Gets the API keys from the file specified in the commandline. If no command for this was present, default is used.*/
 function getKeys() {
-    let keyFileName = process.argv[3];
-    if (typeof keyFileName === "undefined") {
-        keyFileName = DEFAULT_CREDENTIALS_FILENAME;
+    const path = require('path');
+    let keyFilePath = process.argv[4];
+    if (typeof keyFilePath === "undefined") {
+        keyFilePath = path.join(__dirname, DEFAULT_CREDENTIALS_FILENAME);
     }
+
+    keyFilePath = path.resolve(keyFilePath);
+
     try {
-        return require(keyFileName);
+        return require(keyFilePath);
     } catch (error) {
         console.error("Api credentials-file `" + keyFilePath + "` was not found.");
         process.exit(0);
@@ -78,7 +126,7 @@ function getKeys() {
 
 /** Gets the base url from the commandline if it was given. if none is specified use default. */
 function getBaseUrl() {
-    let baseUrl = process.argv[4];
+    let baseUrl = process.argv[5];
     if (typeof baseUrl === "undefined") {
         baseUrl = DEFAULT_BASE_URL;
     }
@@ -87,7 +135,16 @@ function getBaseUrl() {
 
 function help() {
     let help = `
-USAGE: node makeDigest.js "APICALL" {APIKEYFILE} {BASEURL}
+USAGE: node makeDigest.js COMMAND "APICALL" {APIKEYFILE} {BASEURL}
+
+COMMAND "make" to make a digested url and print in the console.
+        "call" to make the call to the server and print the response.
+
+APICALL is the API call to perform, without base url or API key. For example:
+"documents?q=stuxnet&type=atom10"
+"entities?q=list:Malware1&type=json"
+Enclose the APICALL in quotation marks, as the &-sign
+is otherwise interpreted and consumed by the shell.
 
 APIKEYFILE is a json file of the format:
 {
@@ -96,12 +153,6 @@ APIKEYFILE is a json file of the format:
 }
 where ApiKey and SharedKey are supplied to you by your Silobreaker representative.
 
-APICALL is the API call to perform, without base url or API key. For example:
-"documents?q=stuxnet&type=atom10"
-"entities?q=list:Malware1&type=json"
-
-Enclose the APICALL in quotation marks, as the &-sign
-is otherwise interpreted and consumed by the shell.
 BASEURL (optional) is the domain name of the api instance, use api.silobreaker.com
 `;
 
