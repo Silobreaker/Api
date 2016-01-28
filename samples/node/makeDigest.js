@@ -68,9 +68,8 @@ function getKeys() {
     if (typeof keyFileName === "undefined") {
         keyFileName = DEFAULT_CREDENTIALS_FILENAME;
     }
-    let keyFilePath = `${__dirname}\\${keyFileName}`;
     try {
-        return require(keyFilePath);
+        return require(keyFileName);
     } catch (error) {
         console.error("Api credentials-file `" + keyFilePath + "` was not found.");
         process.exit(0);
