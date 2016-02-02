@@ -34,7 +34,6 @@ switch (getCommand().toLowerCase()) {
 function makeCall(digestUri) {
     var request = require("request");
 
-    console.info("Making call...");
     request.get(
         {
             uri: digestUri,
@@ -88,7 +87,7 @@ function getCommand() {
 /** Gets the call from the commandline */
 function getCall() {
     let call = process.argv[3];
-    console.log(call);
+ 
     if (typeof call === "undefined") {
         console.error("Please supply your API call as a parameter.");
         help();
