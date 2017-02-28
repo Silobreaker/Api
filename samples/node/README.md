@@ -6,9 +6,9 @@ saving a cookie.
 
 ### To run
 
-To run the samples you will need [Node.js](https://nodejs.org/en/download/). `=>4.2.6`
+To run the samples you will need [Node.js](https://nodejs.org/en/download/). `=>5.12.0`
 
-Before you can run any of the bellow scripts you will also need to install the NPM-dependencies.
+Before you can run any of the below scripts you will also need to install the NPM-dependencies.
 In the directory of this sample, run 
 ```bash
 npm install
@@ -34,13 +34,38 @@ Prepare a JSON-file with your API-keys.
 You can get a digested url by running:
 
 ```bash
-node digest make "entities?q=dridex&type=json" PATH/TO/APIKEYFILE
+node digest make "entities?q=dridex&type=json" -k PATH/TO/APIKEYFILE
 ```
 
 Or get the result of the call by running
 
 ```bash
-node digest call "entities?q=dridex&type=json" PATH/TO/APIKEYFILE
+node digest call "entities?q=dridex&type=json" -k PATH/TO/APIKEYFILE
+```
+
+### Usage for POST requests
+
+Prepare a file with the request body. This can be any format that the endpoint requires.
+
+```json
+{
+  "query": "Iran",
+  "items":  "barack obama [person],hillary clinton [person],Republican Party (US) [organization]",
+  "normalize": true,
+  "weightAlgorithm": "iwmc"
+}
+```
+
+You can get a digested url for a POST request by running:
+
+```bash
+node digest make "v1/network" -k PATH/TO/APIKEYFILE -m POST --data PATH/TO/BODY
+```
+
+Or get the result of the call by running
+
+```bash
+node digest call "v1/network" -k PATH/TO/APIKEYFILE -m POST --data PATH/TO/BODY
 ```
 
 ## Logging in using a cookie
