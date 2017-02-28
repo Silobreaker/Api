@@ -26,3 +26,12 @@ python authenticate.py
 ```
 
 It should display a json object showing the response for a document search for Sweden.
+
+
+You can also run the POST example which includes a request body when calculating the digest.
+
+```
+python authenticate_post.py
+```
+
+It should display a json object showing the entity relationships suitable for drawing as a network.
