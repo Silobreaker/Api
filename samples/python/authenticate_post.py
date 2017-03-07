@@ -30,7 +30,7 @@ digest = base64.b64encode(hmac_sha1.digest())
 
 # Fetch the data
 
-final_url = url + "?apiKey=" + apiKey + "&digest=" + html.escape(digest.decode())
+final_url = url + "?apiKey=" + apiKey + "&digest=" + urllib.parse.quote(digest.decode())
 
 req = urllib.request.Request(final_url, data=body, headers={'Content-Type': 'application/json'})
 with urllib.request.urlopen(req) as response:
