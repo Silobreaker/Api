@@ -74,9 +74,8 @@ function generateDigestedUrl(method, baseUrl, endpoint, keys, bodyData=undefined
     let digest = generateHash(signature, keys.SharedKey);
 
     let digestedUrl = url.parse(apiUrl, true);
-    digestedUrl.search = undefined;
-    digestedUrl.query.apiKey = keys.ApiKey;
-    digestedUrl.query.digest = digest;
+
+    digestedUrl.search += (digestedUrl.search.length > 0 ? '&' : '') + `apiKey=${keys.ApiKey}&digest=${digest}`;
 
     return url.format(digestedUrl);
 }
