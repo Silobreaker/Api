@@ -71,7 +71,7 @@ function generateDigestedUrl(method, baseUrl, endpoint, keys, bodyData=undefined
         ? Buffer.concat([urlSignature, Buffer.from(bodyData)])
         : urlSignature;
 
-    let digest = generateHash(signature, keys.SharedKey);
+    let digest = encodeURIComponent(generateHash(signature, keys.SharedKey));
 
     let digestedUrl = url.parse(apiUrl, true);
 
