@@ -1,0 +1,3 @@
+person:"Donald Trump" AND country:"China"
+"United Nations" AND keyphrase:"Trade War"
+country:"Iran" AND hacking OR hacker
