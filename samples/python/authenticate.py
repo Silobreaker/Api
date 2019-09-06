@@ -5,6 +5,7 @@ import html
 import json
 import urllib.request
 import argparse
+from urllib import parse
 
 # Command line arguments 
 
@@ -13,7 +14,7 @@ parser.add_argument("URL", help="the endpoint of the API, inside quotation marks
 parser.add_argument("-P", "--POST", help="perform a POST request. Data can be modified in post_data.json", action='store_true')
 args = parser.parse_args()
 
-url = args.URL
+url = parse.quote(args.URL, safe=":/?&=")
 
 with open("../secrets.json") as f: # The secrets file has the same format as the node example.
     secrets = json.load(f)
