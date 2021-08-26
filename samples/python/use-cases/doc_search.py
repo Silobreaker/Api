@@ -11,20 +11,26 @@ Document Search
 
 The script requests a named file containing search queries, each placed on a separate line. These can be entity or free-text searches. The doc_search_example.txt contains some example queries. 
 
-Each query is added to the list termsList and then searched using the /search/documents endpoint. Any additional parameters such as "&sortby=relevance" can be altered as necessary.
+Each query is added to the list termsList and then searched using the /search/documents endpoint. Any additional parameters such as "&sortby=relevance" or number of documents can be altered as necessary.
 
 Authentication requires a file containing the user's shared and secret key. Instructions for this are available in the root python folder and on https://github.com/Silobreaker/Api/tree/master/samples/python.
-The final URL including apikey and digest is printed to the command line for reference. The results of all searches are written to a file called output.json in JSON format.
+The final URL including apikey and digest is printed to the command line for reference. The results of all searches are written to a file called output.json or output.csv depending on format selection.
 '''
 
 # Select file of search terms - put each term on a new line
 
 searchTerms = input("Specify search file: ")
+outputType = input("Specify output type (json,csv): ")
+while outputType != "json" and outputType != "csv":
+	outputType = input("Please specify a valid output type (json,csv): ")
+outputString = "output." + outputType
 termsList = []
 
 # Prepare files for reading & writing
 
-with open(searchTerms, 'r') as Terms, open("output.json", 'w') as rawOutput:
+with open(searchTerms, 'r') as Terms, open(outputString, 'w', encoding='utf-8-sig') as rawOutput:
+	if outputType == "csv":
+		rawOutput.write("Id,Description,Type,PublicationDate,Publisher,SourceUrl,SilobreakerUrl\n")
 	for i in Terms:
 		termsList.append(i)
 		
@@ -60,10 +66,21 @@ with open(searchTerms, 'r') as Terms, open("output.json", 'w') as rawOutput:
 		## print("Final URL: " + final_url)
 
 		req = urllib.request.Request(final_url)
+		
 		with urllib.request.urlopen(req) as response:
 			responseJson = response.read()
 
-		# Pretty print the data
-
-		responseObject = json.loads(responseJson.decode("utf-8"))
-		rawOutput.write(json.dumps(responseObject, sort_keys=True, indent=2, separators=(',', ': ')))
+			# Pretty print the data
+			responseObject = json.loads(responseJson.decode("utf-8"))
+		if outputType == "json":
+			rawOutput.write(json.dumps(responseObject, ensure_ascii=False, sort_keys=True, indent=2, separators=(',', ': ')))
+		elif outputType == "csv":
+			rawOutput.write(i)
+			for each in responseObject["Items"]:
+				rawOutput.write(each["Id"] + ',')
+				rawOutput.write('"' + each["Description"] + '",')
+				rawOutput.write(each["Type"] + ',')
+				rawOutput.write(each["PublicationDate"] + ',')
+				rawOutput.write(each["Publisher"] + ',')
+				rawOutput.write(each["SourceUrl"] + ',')
+				rawOutput.write(each["SilobreakerUrl"] + '\n')
