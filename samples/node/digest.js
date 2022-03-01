@@ -75,7 +75,11 @@ function generateDigestedUrl(method, baseUrl, endpoint, keys, bodyData=undefined
 
     let digestedUrl = url.parse(apiUrl, true);
 
-    digestedUrl.search += (digestedUrl.search.length > 0 ? '&' : '') + `apiKey=${keys.ApiKey}&digest=${digest}`;
+    const apiKeyParams = `apiKey=${keys.ApiKey}&digest=${digest}`;
+    if (digestedUrl.search === null)
+        digestedUrl.search = `?${apiKeyParams}`;
+    else
+        digestedUrl.search +=  `&${apiKeyParams}`;
 
     return url.format(digestedUrl);
 }
