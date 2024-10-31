@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: API-sample
+  description: Samples for Silobreaker API
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  owner: digients
+  lifecycle: production
