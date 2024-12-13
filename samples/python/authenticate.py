@@ -1,7 +1,6 @@
 import base64
 import hashlib
 import hmac
-import html
 import json
 import urllib.request
 import argparse
@@ -59,7 +58,7 @@ else:
 with urllib.request.urlopen(req) as response:
     responseJson = response.read()
 
-# Pretty print the data
+# Pretty print the data 
 
 responseObject = json.loads(responseJson.decode("utf-8"))
 print(json.dumps(responseObject, sort_keys=True, indent=2, separators=(',', ': ')))
