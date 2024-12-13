@@ -1,6 +1,6 @@
 {
   "query": "Iran",
-  "items":  "barack obama [person],hillary clinton [person],Republican Party (US) [organization]",
+  "items":  "donald trump [person],Republican Party (US) [organization]",
   "normalize": true,
   "weightAlgorithm": "iwmc"
 }

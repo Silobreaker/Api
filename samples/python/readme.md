@@ -38,3 +38,5 @@ It should display a JSON object showing the entity relationships suitable for dr
 
 ### SSL: CERTIFICATE_VERIFY_FAILED / MacOS
 If you run into a problem regarding the verification of the certificate try executing the command `/Applications/Python 3.6/Install Certificates.command`. More information regarding this issue [here](https://stackoverflow.com/questions/41691327/ssl-sslerror-ssl-certificate-verify-failed-certificate-verify-failed-ssl-c/41692664).
+
+For any other problems, feel free to reach out to the Silobreaker team.
