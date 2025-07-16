@@ -1,13 +1,12 @@
-# How to authenticate with the Silobreaker API using CSharp and Visual Studio 2010
+# How to authenticate with the Silobreaker API using CSharp and Visual Studio
 
 This example shows you how to sign a link using your API key and shared secret key.
 
-The security is based on a HMAC-SHA1 digest. This allows you to sign an API url using the shared key for your account.
+The security is based on a HMAC-SHA512 digest. This allows you to sign an API url using the shared key for your account.
 
 ## Usage
 
-Make sure you have Visual Studio 2010 set up on your computer. It might also work with other versions
-of Visual Studio, but Silobreaker has only tested it using Visual Studio 2010.
+Make sure you have Visual Studio set up on your computer.
 
 Open `ApiAuthenticator.sln` and run it using debug mode.
 

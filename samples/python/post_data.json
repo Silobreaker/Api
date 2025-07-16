@@ -1,6 +1,7 @@
 {
-  "query": "Iran",
-  "items":  "donald trump [person],Republican Party (US) [organization]",
-  "normalize": true,
-  "weightAlgorithm": "iwmc"
+  "query": "list:Threat Publications",
+  "termQuery": "entitytype:Malware",
+  "size": 5,
+  "SortBy": "heat7d",
+  "SortDirection": "desc"
 }

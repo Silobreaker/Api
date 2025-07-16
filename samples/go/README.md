@@ -2,12 +2,11 @@
 
 This example shows you how to sign a link using your API key and shared secret key.
 
-The security is based on a HMAC-SHA1 digest. This
-allows you to sign an API url using the shared key for your account.
+The security is based on a HMAC-SHA512 digest. This allows you to sign an API url using the shared key for your account.
 
 ## Usage
 
-Make sure you have go set up on your computer, and your go paths configured correctly.
+Make sure you have Go intalled, and your Go paths correctly configured.
 
 Then run
 

@@ -20,7 +20,7 @@ namespace ApiAuthenticator
         private static string GetBase64Digest(string signatureString, string secretKey)
         {
             var enc = Encoding.UTF8;
-            var hmac = new HMACSHA1(enc.GetBytes(secretKey));
+            var hmac = new HMACSHA512(enc.GetBytes(secretKey));
             hmac.Initialize();
 
             var buffer = enc.GetBytes(signatureString);

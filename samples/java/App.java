@@ -24,7 +24,7 @@ class Secrets
  */
 public class App {
 
-    private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
+    private static final String HMAC_SHA512_ALGORITHM = "HmacSHA512";
 
     /**
      * Computes RFC 2104-compliant HMAC signature.
@@ -39,11 +39,11 @@ public class App {
         throws NoSuchAlgorithmException, InvalidKeyException
     {
 
-        // get an hmac_sha1 key from the raw key bytes
-        SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), HMAC_SHA1_ALGORITHM);
+        // get an hmac_sha512 key from the raw key bytes
+        SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), HMAC_SHA512_ALGORITHM);
 
-        // get an hmac_sha1 Mac instance and initialize with the signing key
-        Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
+        // get an hmac_sha512 Mac instance and initialize with the signing key
+        Mac mac = Mac.getInstance(HMAC_SHA512_ALGORITHM);
         mac.init(signingKey);
 
         // compute the hmac on input data bytes

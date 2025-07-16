@@ -1,0 +1,8 @@
+{
+  "ApiKey": "",
+  "SharedKey": "",
+  "BaseUrl": "https://api.silobreaker.com",
+  "ApiCall": "/v2/documents/search?query=entitytype:Malware",
+  "Verb": "GET",
+  "OutputFile": "SignedURL.txt"
+}

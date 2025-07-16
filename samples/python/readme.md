@@ -1,13 +1,12 @@
 # How to authenticate with the Silobreaker API using Python
 
-This example shows you how to sign a link using your API key and shared secret key.
+This example shows you how to sign a link using your API key and shared secret.
 
-The security is based on a HMAC-SHA1 digest. This allows you to sign an API url using the shared key for your account.
+The security is based on a HMAC-SHA512 digest. This allows you to sign an API url using the shared key for your account.
 
 ## Usage
 
-Make sure you have Python 3 installed on your computer, including the `requests` package. You can install this package using the command `pip3 install requests`. 
-You need to have a file called `secrets.json` in the `samples` directory. The secrets file should contain your api key and shared key, and be of the format
+Make sure you have Python 3 installed, and ensure you have a JSON file containing your API key and shared secret in a file called `secrets.json` in the `samples` directory.
 
 ```json
 {
@@ -16,23 +15,23 @@ You need to have a file called `secrets.json` in the `samples` directory. The se
 }
 ```
 
-You can either perform a GET or a POST request. For a POST request use the command option `-P`.
+You can either perform a `GET` or a `POST` request. For a `POST` request use the command option `-P`.
 
-An example of a GET request is
+An example of a `GET` request is
 
 ```
-python3 authenticate.py "https://api.silobreaker.com/search/documents?q=Sweden&type=json"
+python3 authenticate.py "https://api.silobreaker.com/v2/documents/search?query=country:Sweden&type=json"
 ```
 
 It should display a JSON object showing the response for a document search for Sweden.
 
-A POST example is 
+A `POST` example is 
 
 ```
-python3 authenticate.py -P "https://api.silobreaker.com/v1/network"
+python3 authenticate.py -P "https://api.silobreaker.com/v2/heat"
 ```
 
-It should display a JSON object showing the entity relationships suitable for drawing as a network.
+It should display a JSON object showing the trending entities in a Heat response, like what is shown in the tool in the UI.
 
 ## Troubleshooting
 

@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"crypto/hmac"
-	"crypto/sha1"
+	"crypto/sha512"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -19,7 +19,7 @@ type keydata struct {
 }
 
 func main() {
-	signedURL := signURL("https://api.silobreaker.com/search/documents?q=Sweden&type=json")
+	signedURL := signURL("https://api.silobreaker.com/v2/documents/search?query=country:Sweden&type=json")
 	resp, e := http.Get(signedURL)
 	if e != nil {
 		fmt.Printf("Response error: %v\n", e)
@@ -61,7 +61,7 @@ func getKeys(keyfile string) keydata {
 func signURL(message string) string {
 	keys := getKeys("../secrets.json")
 	completeMessage := "GET " + message
-	mac := hmac.New(sha1.New, []byte(keys.SharedKey))
+	mac := hmac.New(sha512.New, []byte(keys.SharedKey))
 	mac.Write([]byte(completeMessage))
 	expectedMAC := mac.Sum(nil)
 	digest := base64.StdEncoding.EncodeToString(expectedMAC)

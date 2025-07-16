@@ -91,7 +91,7 @@ function generateDigestedUrl(method, baseUrl, endpoint, keys, bodyData=undefined
 function generateHash(data, key) {
     const crypto = require("crypto");
 
-    let hmac = crypto.createHmac("sha1", key);
+    let hmac = crypto.createHmac("sha512", key);
     hmac.setEncoding("base64");
     hmac.write(data);
     hmac.end();
@@ -104,7 +104,7 @@ function parseArguments() {
     let ArgumentParser = require('argparse').ArgumentParser;
     let parser = new ArgumentParser({
         addHelp: true,
-        description: 'Create a Silobreaker API link signed with a HMAC-SHA1 digest.'
+        description: 'Create a Silobreaker API link signed with a HMAC-SHA512 digest.'
     });
 
     parser.addArgument('command', {
@@ -115,7 +115,7 @@ function parseArguments() {
     });
     parser.addArgument('endpoint', {
         help: `API endpoint without base url or API key. For example: 
-        "entities?q=list:Malware1&type=json".
+        "v2/documents/search?query=entitytype:Malware&type=json".
         Enclose the endpoint in quotation marks, as the &-sign is otherwise interpreted and consumed by the shell.`
     });
     parser.addArgument(['-m', '--method'], {

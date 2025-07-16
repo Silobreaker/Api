@@ -1,6 +1,6 @@
 <?php
 $verb = "GET";
-$url = "https://api.silobreaker.com/search/documents?q=Sweden&type=json"; # ?q= syntax must be used. /documents/Sweden doesn't work.
+$url = "https://api.silobreaker.com/v2/documents/search?query=country:Sweden&type=json"; # ?q= syntax must be used. /documents/Sweden doesn't work.
 $message = $verb . " " . $url;
 
 $string = file_get_contents("secrets.json");
@@ -10,12 +10,13 @@ $apikey = $json_a['ApiKey'];
 $sharedkey = $json_a['SharedKey'];
 
 # Create binary hash of message
-$hash = hash_hmac('sha1', $message, $sharedkey, true);
+$hash = hash_hmac('sha512', $message, $sharedkey, true);
 
 # ...and encode it to base64
 $digest = base64_encode($hash);
 
-$final_url = $url . "&apiKey=" . $apikey . "&digest=" . urlencode($digest);
+$separator = strpos($url, '?') === false ? '?' : '&';
+$final_url = $url . $separator . "apiKey=" . $apikey . "&digest=" . urlencode($digest);
 
 # Get and pretty print API response
 $json_response = json_decode(file_get_contents($final_url));

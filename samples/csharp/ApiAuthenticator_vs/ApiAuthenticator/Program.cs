@@ -21,7 +21,7 @@ namespace ApiAuthenticator
         {
             Encoding encoding = Encoding.UTF8;
 
-            var hmac = new HMACSHA1(encoding.GetBytes(secretKey));
+            var hmac = new HMACSHA512(encoding.GetBytes(secretKey));
             hmac.Initialize();
 
             List<byte> buffer = new List<byte>();
@@ -41,7 +41,7 @@ namespace ApiAuthenticator
             if (args.Length < 2 || args.Length > 3)
             {
                 Console.WriteLine("USAGE: ApiAuthenticator secretsfile.json URL [POSTDATA]");
-                Console.WriteLine("URL: The api url to use (without the api key), for example: https://api.silobreaker.com/search/documents?q=Sweden&type=json");
+                Console.WriteLine("URL: The api url to use (without the api key), for example: https://api.silobreaker.com/v2/documents/search?query=country:Sweden&type=json");
                 Console.WriteLine("POSTDATA: Path to postdata file, if specified http POST will be used. Otherwise http GET will be used");
                 return;
             }

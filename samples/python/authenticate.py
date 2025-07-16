@@ -30,8 +30,8 @@ if args.POST:
     urlSignature = verb + " " + url
     message = urlSignature.encode() + body
 
-    hmac_sha1 = hmac.new(sharedKey.encode(), message, digestmod=hashlib.sha1)
-    digest = base64.b64encode(hmac_sha1.digest())
+    hmac_sha512 = hmac.new(sharedKey.encode(), message, digestmod=hashlib.sha512)
+    digest = base64.b64encode(hmac_sha512.digest())
 
     # Fetch the data
 
@@ -44,12 +44,12 @@ else:
 
     # Sign the URL
 
-    hmac_sha1 = hmac.new(sharedKey.encode(), message.encode(), digestmod=hashlib.sha1)
-    digest = base64.b64encode(hmac_sha1.digest())
+    hmac_sha512 = hmac.new(sharedKey.encode(), message.encode(), digestmod=hashlib.sha512)
+    digest = base64.b64encode(hmac_sha512.digest())
 
     # Fetch the data
-
-    final_url = url + "&apiKey=" + apiKey + "&digest=" + urllib.parse.quote(digest.decode())
+    sep = '&' if '?' in url else '?'
+    final_url = url + sep + "apiKey=" + apiKey + "&digest=" + urllib.parse.quote(digest.decode())
     req = urllib.request.Request(final_url)
 
 
